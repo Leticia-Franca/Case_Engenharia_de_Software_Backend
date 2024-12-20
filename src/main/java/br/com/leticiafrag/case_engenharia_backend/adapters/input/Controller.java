@@ -1,6 +1,6 @@
 package br.com.leticiafrag.case_engenharia_backend.adapters.input;
 import br.com.leticiafrag.case_engenharia_backend.domain.User;
-import br.com.leticiafrag.case_engenharia_backend.ports.output.UserOutputPort;
+import br.com.leticiafrag.case_engenharia_backend.ports.input.UserInputPort;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -9,30 +9,38 @@ import java.util.List;
 @RequestMapping("/users")
 public class Controller {
 
-    private UserOutputPort userOutputPort;
+    private UserInputPort userInputPort;
 
     @PostMapping
     public User createUser(@RequestBody User user) {
-        // returns the result from userOutputPort.createUser(user)
+        System.out.println(user.getName());
+        System.out.println(user.getEmail());
+        System.out.println(user.getAge());
+        return null;
+        // returns the result from UserInputPort.createUser(user)
     }
 
     @GetMapping
     public List<User> getAllUsers() {
-        // returns the result from userOutputPort.getAllUsers()
+        // returns the result from UserInputPort.getAllUsers()
+        return null;
     }
 
     @GetMapping("/{id}")
     public User getUserById(@PathVariable Long id) {
-        // retorna o resultado do userOutputPort.getUserById(id)
+        // returns the result from UserInputPort.getUserById(id)
+        return null;
     }
 
     @PutMapping("/{id}")
     public User updateUser(@PathVariable Long id, @RequestBody User user) {
-        // retorna o resultado do userOutputPort.updateUser(id, user)
+        // returns the result from UserInputPort.updateUser(id, user)
+        return null;
     }
 
     @DeleteMapping("/{id}")
     public boolean deleteUser(@PathVariable Long id) {
-        // retorna o resultado do userOutputPort.deleteUser(id)
+        // returns the result from UserInputPort.deleteUser(id)
+        return true;
     }
 }
