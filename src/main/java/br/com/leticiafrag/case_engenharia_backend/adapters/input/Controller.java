@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -24,19 +25,19 @@ public class Controller {
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> getAllUsers() {
+    public ResponseEntity<Object> getAllUsers() {
         List<User> storedUsers = userInputPort.getAllUsers();
         if (storedUsers.isEmpty())
-            return ResponseEntity.status(HttpStatus.OK).build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("ERROR: No users found.");
         else
             return ResponseEntity.status(HttpStatus.OK).body(storedUsers); //does this work?
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable String id) {
+    public ResponseEntity<Object> getUserById(@PathVariable String id) {
         User searchedUser = userInputPort.getUserById(id);
         if (searchedUser == null)
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("ERROR: User with id " + id + " not found.");
         else
             return ResponseEntity.status(HttpStatus.OK).body(searchedUser);
     }
