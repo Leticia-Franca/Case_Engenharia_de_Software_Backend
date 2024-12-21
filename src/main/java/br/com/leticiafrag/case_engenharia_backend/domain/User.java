@@ -1,15 +1,21 @@
 package br.com.leticiafrag.case_engenharia_backend.domain;
 
 import java.util.Random;
+import java.util.UUID;
 
+/*
+*
+* Using UUID to generate a value for 'String id' because, compared to Random().Long(),
+* it has lesser risk of duplicating numbers
+* */
 public class User {
-    Long id;
+    String id;
     String name;
     String email;
     int age;
 
     public User(String name, String email, int age) {
-        this.id = new Random().nextLong();
+        this.id = UUID.randomUUID().toString();
         this.name = name;
         this.email = email;
         this.age = age;
@@ -31,7 +37,7 @@ public class User {
         this.email = email;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
