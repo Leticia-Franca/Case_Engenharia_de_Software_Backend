@@ -6,7 +6,7 @@ import br.com.leticiafrag.case_engenharia_backend.ports.output.UserOutputPort;
 import java.util.List;
 
 /*
-* Service responsible managing users in the API.
+* Service responsible for managing users in the API.
 * Implements the userInputPort interface (following the Hexagonal Architecture),
 * providing methods to create, list, update and delete users (as well as
 * data validation for the user being created).
