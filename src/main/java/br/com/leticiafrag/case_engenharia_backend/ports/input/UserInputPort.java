@@ -3,6 +3,10 @@ import br.com.leticiafrag.case_engenharia_backend.domain.User;
 
 import java.util.List;
 
+/*
+ * Interface to be implemented by the service layer (in this case,
+ * UserService)
+ * */
 public interface UserInputPort {
 
     String createUser(User user);
