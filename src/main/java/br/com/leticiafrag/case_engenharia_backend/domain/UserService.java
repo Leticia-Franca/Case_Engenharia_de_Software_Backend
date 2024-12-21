@@ -25,6 +25,8 @@ public class UserService implements UserInputPort {
             return UserValidation.EMAIL_EMPTY;
         if (!user.getEmail().matches("^[\\w.%+-]+@[\\w.-]+\\.[A-Za-z]{2,6}$"))
             return UserValidation.EMAIL_INVALID;
+        if (userOutputPort.findByEmail(user.getEmail()))
+            return UserValidation.EMAIL_DUPLICATED;
         if (user.getAge() < 0 || user.getAge() > 123)
             return UserValidation.AGE_INVALID;
 
@@ -37,7 +39,7 @@ public class UserService implements UserInputPort {
         if (result != UserValidation.VALID)
             return result.getMessage();
         User savedUser = this.userOutputPort.saveUser(user);
-        return "User created successfully with id: " + savedUser.getId();
+        return "User created successfully with ID: " + savedUser.getId();
     }
 
     public List<User> getAllUsers() {
@@ -51,11 +53,15 @@ public class UserService implements UserInputPort {
     public String updateUser(String id, User user) {
         User updatedUser = this.userOutputPort.updateUser(id, user);
         if (updatedUser == null)
-            return "ERROR: Update could not be made. There's no user with this id.";
-        return "User of id " + user.getId() + " updated successfully";
+            return "ERROR: Update could not be made. There's no user with this ID.";
+        return "User updated successfully";
     }
 
-    public boolean deleteUser(String id) {
-        return this.userOutputPort.deleteUser(id);
+    public String deleteUser(String id) {
+        boolean isUserDeleted = this.userOutputPort.deleteUser(id);
+        if (isUserDeleted)
+            return "The user was deleted with success!";
+        else
+            return "ERROR: There's no user with this ID.";
     }
 }
