@@ -1,6 +1,5 @@
 package br.com.leticiafrag.case_engenharia_backend.domain;
 
-import java.util.Random;
 import java.util.UUID;
 
 /*
