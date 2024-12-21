@@ -15,7 +15,7 @@ A API realiza operações CRUD, armazenando temporariamente os dados em forma de
 - Arquitetura Hexagonal/Portas e Adaptadores
 - Tratamento de respostas de erro
 
-## Como executar
+## Como executar a API
 
 ### Clone o repositório
 ### Entre no diretório
@@ -27,11 +27,11 @@ A API realiza operações CRUD, armazenando temporariamente os dados em forma de
 
 A API poderá ser acessada em http://localhost:8080/users.
 
-## API Endpoints
+## Endpoints da API
 Para fazer as requisições abaixo, foi utilizada a ferramenta curl.
 - Criar pessoa usuária
 ```
-    curl -X POST http://localhost:8080/users/exemplo \
+    curl -X POST http://localhost:8080/users/ \
     -H "Content-Type: application/json" \
     -d '{
         "name": "Carlos",
