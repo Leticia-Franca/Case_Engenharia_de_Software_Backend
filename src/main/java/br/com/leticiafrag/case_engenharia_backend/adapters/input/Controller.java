@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping(value = {"/users", "/users/"})
 public class Controller {
 
     @Autowired
@@ -51,10 +51,10 @@ public class Controller {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable String id) {
-        boolean isUserDeleted =  userInputPort.deleteUser(id);
-        if (isUserDeleted == false)
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        String response =  userInputPort.deleteUser(id);
+        if (response.startsWith("ERROR:"))
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         else
-            return ResponseEntity.status(HttpStatus.OK).body("The user was deleted with success!");
+            return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }
