@@ -9,5 +9,5 @@ public interface UserInputPort {
     List<User> getAllUsers();
     User getUserById(String id);
     String updateUser(String id, User user);
-    boolean deleteUser(String id);
+    String deleteUser(String id);
 }

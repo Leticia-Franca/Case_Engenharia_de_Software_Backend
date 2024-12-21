@@ -9,6 +9,7 @@ public interface UserOutputPort {
     User saveUser(User user);
     List<User> getAllUsers();
     User findById(String id);
+    boolean findByEmail(String email);
     User updateUser(String id, User user);
     boolean deleteUser(String id);
 
