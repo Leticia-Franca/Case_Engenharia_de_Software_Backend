@@ -2,6 +2,8 @@ package br.com.leticiafrag.case_engenharia_backend.adapters.input;
 import br.com.leticiafrag.case_engenharia_backend.domain.User;
 import br.com.leticiafrag.case_engenharia_backend.ports.input.UserInputPort;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,35 +16,43 @@ public class Controller {
     private UserInputPort userInputPort;
 
     @PostMapping
-    public User createUser(@RequestBody User user) {
-        return userInputPort.createUser(user);
+    public ResponseEntity<String> createUser(@RequestBody User user) {
+        String response = userInputPort.createUser(user);
+        if (response.startsWith("ERROR:"))
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @GetMapping
-    public List<User> getAllUsers() {
-        // returns the result from UserInputPort.getAllUsers()
-        //return null;
-        return userInputPort.getAllUsers();
+    public ResponseEntity<List<User>> getAllUsers() {
+        List<User> storedUsers = userInputPort.getAllUsers();
+        if (storedUsers.isEmpty())
+            return ResponseEntity.status(HttpStatus.OK).build();
+        else
+            return ResponseEntity.status(HttpStatus.OK).body(storedUsers); //does this work?
     }
 
     @GetMapping("/{id}")
-    public User getUserById(@PathVariable Long id) {
-        // returns the result from UserInputPort.getUserById(id)
-        //return null;
-        return userInputPort.getUserById(id);
+    public ResponseEntity<User> getUserById(@PathVariable String id) {
+        User searchedUser = userInputPort.getUserById(id);
+        if (searchedUser == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        else
+            return ResponseEntity.status(HttpStatus.OK).body(searchedUser);
     }
 
     @PutMapping("/{id}")
-    public User updateUser(@PathVariable Long id, @RequestBody User user) {
-        // returns the result from UserInputPort.updateUser(id, user)
-        //return null;
-        return userInputPort.updateUser(id, user);
+    public ResponseEntity<User> updateUser(@PathVariable String id, @RequestBody User user) {
+        User updatedUser = userInputPort.updateUser(id, user);
+        return ResponseEntity.status(HttpStatus.OK).body(updatedUser);
     }
 
     @DeleteMapping("/{id}")
-    public boolean deleteUser(@PathVariable Long id) {
-        // returns the result from UserInputPort.deleteUser(id)
-        //return true;
-        return userInputPort.deleteUser(id);
+    public ResponseEntity<String> deleteUser(@PathVariable String id) {
+        boolean isUserDeleted =  userInputPort.deleteUser(id);
+        if (isUserDeleted == false)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        else
+            return ResponseEntity.status(HttpStatus.OK).body("The user was deleted with success!");
     }
 }
