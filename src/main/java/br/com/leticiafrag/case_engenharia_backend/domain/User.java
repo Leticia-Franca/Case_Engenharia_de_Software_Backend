@@ -15,7 +15,7 @@ public class User {
     int age;
 
     public User(String name, String email, int age) {
-        this.id = UUID.randomUUID().toString();
+        this.id = UUID.randomUUID().toString().replace("-", "");
         this.name = name;
         this.email = email;
         this.age = age;
