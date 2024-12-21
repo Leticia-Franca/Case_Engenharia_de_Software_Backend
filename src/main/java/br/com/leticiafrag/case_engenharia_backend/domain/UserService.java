@@ -5,7 +5,6 @@ import br.com.leticiafrag.case_engenharia_backend.ports.output.UserOutputPort;
 
 import java.util.List;
 
-
 public class UserService implements UserInputPort {
 
     private final UserOutputPort userOutputPort;
@@ -14,32 +13,47 @@ public class UserService implements UserInputPort {
         this.userOutputPort = userOutputPort;
     }
 
-    public User createUser(User user) {
-        //some validation here
-        return this.userOutputPort.saveUser(user);
+    // returns to createUser function an enum with the code and message informing the potential error in user information
+    private UserValidation isUserValid(User user) {
+        if (user.getName() == null || user.getName().isBlank())
+            return UserValidation.NAME_EMPTY;
+        if (user.getName().length() < 3 || user.getName().length() > 50)
+            return UserValidation.NAME_LENGTH;
+        if (!user.getName().matches("^[\\p{L}\\s]+$"))
+            return UserValidation.NAME_INVALID;
+        if (user.getEmail() == null || user.getEmail().isBlank())
+            return UserValidation.EMAIL_EMPTY;
+        if (!user.getEmail().matches("^[\\w.%+-]+@[\\w.-]+\\.[A-Za-z]{2,6}$"))
+            return UserValidation.EMAIL_INVALID;
+        if (user.getAge() < 0 || user.getAge() > 123)
+            return UserValidation.AGE_INVALID;
+
+        return UserValidation.VALID;
+    }
+
+    //validates user and returns an error or success message to Controller
+    public String createUser(User user) {
+        UserValidation result = isUserValid(user);
+        if (result != UserValidation.VALID)
+            return result.getMessage();
+        User savedUser = this.userOutputPort.saveUser(user);
+        return "User created successfully with id: " + savedUser.getId();
     }
 
     public List<User> getAllUsers() {
         return this.userOutputPort.getAllUsers();
     }
 
-    public User getUserById(Long id) {
-        this.userOutputPort.findById(id);
-        /*
-        * TODO:
-        *  if there isn't a user with the id informed,
-        *  which is better: error message or exception?
-        * */
-        return null;
+    public User getUserById(String id) {
+        return this.userOutputPort.findById(id);
     }
 
-    public User updateUser(Long id, User user) {
+    public User updateUser(String id, User user) {
         this.userOutputPort.updateUser(id, user);
         return null;
     }
 
-    public boolean deleteUser(Long id) {
-        this.userOutputPort.deleteUser(id);
-        return true;
+    public boolean deleteUser(String id) {
+        return this.userOutputPort.deleteUser(id);
     }
 }
