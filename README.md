@@ -1,6 +1,6 @@
 # API para gerenciamento de dados
 
-API para gerenciar dados de usuários (CRUD) que faz parte do Case de Engenharia de Software Backend do Itaú Unibanco.
+API para gerenciar dados de usuários (CRUD) como solução do Case de Engenharia de Software Backend do Itaú Unibanco.
 A API realiza operações CRUD, armazenando temporariamente os dados em forma de lista.  
 
 ## Tecnologias
@@ -8,7 +8,7 @@ A API realiza operações CRUD, armazenando temporariamente os dados em forma de
 - Java 17
 - Bibliotecas de teste como JUnit e Mockito
 
-## Práticas adotadas
+## Práticas utilizadas
 - API REST
 - SOLID
 - Injeção de Dependências
@@ -22,13 +22,13 @@ A API realiza operações CRUD, armazenando temporariamente os dados em forma de
     cd [seu-diretório]
 ### Construa o projeto
     mvn clean package
-### Execute a aplicação
+### Execute a API
     java -jar target/case-engenharia-backend-0.0.1-SNAPSHOT.jar
 
 A API poderá ser acessada em http://localhost:8080/users.
 
 ## Endpoints da API
-Para fazer as requisições abaixo, foi utilizada a ferramenta curl.
+Para fazer as requisições foi utilizada a ferramenta curl.
 - Criar pessoa usuária
 ```
     curl -X POST http://localhost:8080/users/ \
