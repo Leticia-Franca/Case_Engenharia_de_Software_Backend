@@ -42,9 +42,11 @@ public class Controller {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable String id, @RequestBody User user) {
-        User updatedUser = userInputPort.updateUser(id, user);
-        return ResponseEntity.status(HttpStatus.OK).body(updatedUser);
+    public ResponseEntity<String> updateUser(@PathVariable String id, @RequestBody User user) {
+        String response = userInputPort.updateUser(id, user);
+        if (response.startsWith("ERROR:"))
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @DeleteMapping("/{id}")

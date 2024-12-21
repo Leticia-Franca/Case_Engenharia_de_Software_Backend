@@ -8,6 +8,6 @@ public interface UserInputPort {
     String createUser(User user);
     List<User> getAllUsers();
     User getUserById(String id);
-    User updateUser(String id, User user);
+    String updateUser(String id, User user);
     boolean deleteUser(String id);
 }

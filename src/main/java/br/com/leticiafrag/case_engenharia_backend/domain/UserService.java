@@ -48,9 +48,11 @@ public class UserService implements UserInputPort {
         return this.userOutputPort.findById(id);
     }
 
-    public User updateUser(String id, User user) {
-        this.userOutputPort.updateUser(id, user);
-        return null;
+    public String updateUser(String id, User user) {
+        User updatedUser = this.userOutputPort.updateUser(id, user);
+        if (updatedUser == null)
+            return "ERROR: Update could not be made. There's no user with this id.";
+        return "User of id " + user.getId() + " updated successfully";
     }
 
     public boolean deleteUser(String id) {
