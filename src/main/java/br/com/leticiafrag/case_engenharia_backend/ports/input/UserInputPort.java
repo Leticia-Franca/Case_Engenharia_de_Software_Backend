@@ -5,9 +5,9 @@ import java.util.List;
 
 public interface UserInputPort {
 
-    User createUser(User user);
+    String createUser(User user);
     List<User> getAllUsers();
-    User getUserById(Long id);
-    User updateUser(Long id, User user);
-    boolean deleteUser(Long id);
+    User getUserById(String id);
+    User updateUser(String id, User user);
+    boolean deleteUser(String id);
 }

@@ -8,8 +8,8 @@ public interface UserOutputPort {
 
     User saveUser(User user);
     List<User> getAllUsers();
-    User findById(Long id);
-    User updateUser(Long id, User user);
-    boolean deleteUser(Long id);
+    User findById(String id);
+    User updateUser(String id, User user);
+    boolean deleteUser(String id);
 
 }
