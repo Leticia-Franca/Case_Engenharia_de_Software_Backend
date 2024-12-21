@@ -51,15 +51,43 @@ public class ControllerTest {
     }
 
     @Test
-    void testCreateUser_WhenInvalidUser_ShouldReturnStatus400() throws Exception {
-        User invalidUser = new User("", "someemail-example.com", -42);
-        when(userInputPort.createUser(any(User.class))).thenReturn("ERROR: The user is invalid.");
+    void testCreateUser_WhenUserHasNoName_ShouldReturnStatus400() throws Exception {
+        User invalidUser = new User("", "someemail@example.com", 42);
+        when(userInputPort.createUser(any(User.class))).thenReturn("ERROR: The name cannot be empty.");
 
         mockHTTPRequests.perform(post("/users")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(invalidUser)))
                 .andExpect(status().isBadRequest())
-                .andExpect(content().string("ERROR: The user is invalid."));
+                .andExpect(content().string("ERROR: The name cannot be empty."));
+
+        verify(userInputPort, times(1)).createUser(any(User.class));
+    }
+
+    @Test
+    void testCreateUser_WhenUserEmailIsInvalid_ShouldReturnStatus400() throws Exception {
+        User invalidUser = new User("Roberto", "someemail-example.com", 42);
+        when(userInputPort.createUser(any(User.class))).thenReturn("ERROR: The email is invalid.");
+
+        mockHTTPRequests.perform(post("/users")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(invalidUser)))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("ERROR: The email is invalid."));
+
+        verify(userInputPort, times(1)).createUser(any(User.class));
+    }
+
+    @Test
+    void testCreateUser_WhenUserAgeIsInvalid_ShouldReturnStatus400() throws Exception {
+        User invalidUser = new User("Roberto", "someemail@example.com", -42);
+        when(userInputPort.createUser(any(User.class))).thenReturn("ERROR: The age must be between 0 and 123.");
+
+        mockHTTPRequests.perform(post("/users")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(invalidUser)))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("ERROR: The age must be between 0 and 123."));
 
         verify(userInputPort, times(1)).createUser(any(User.class));
     }
